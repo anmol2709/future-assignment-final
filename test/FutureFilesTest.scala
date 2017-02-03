@@ -3,10 +3,23 @@ package edu.knoldus
 import java.io.File
 
 import org.scalatest.FunSuite
+
 import scala.concurrent.Await
 import scala.concurrent.duration._
 
 class FutureFilesTest extends FunSuite {
+
+  test("Testing Existance of Directory") {
+
+    assert(new File("/home/knoldus/Future-assignment/src/main/resources").exists())
+
+  }
+
+  test("Testing Directory Not Empty") {
+
+    assert(((Await.result(FutureFiles.getFiles(new File("/home/knoldus/Future-assignment/src/main/resources")), 10 seconds))) != List())
+
+  }
 
   test("Checking list of files data type") {
 
@@ -15,11 +28,15 @@ class FutureFilesTest extends FunSuite {
       new File("/home/knoldus/Future-assignment/src/main/resources/D2/t3"),
       new File("/home/knoldus/Future-assignment/src/main/resources/D2/t4"),
       new File("/home/knoldus/Future-assignment/src/main/resources/D2/D3/t5"))
+
     assert(Await.result(FutureFiles.getFiles(new File("/home/knoldus/Future-assignment/src/main/resources")), 10 seconds) == listOfFiles)
 
   }
 
   test("Testing number of Files") {
+
     assert(((Await.result(FutureFiles.getFiles(new File("/home/knoldus/Future-assignment/src/main/resources")), 10 seconds)).length) == 5)
+
   }
+
 }
